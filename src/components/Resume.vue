@@ -1,9 +1,9 @@
 <template>
   <!-- <v-container class="fill-height"> -->
-  <v-timeline style="position: relative; z-index: 112;">
+  <v-timeline style="position: relative; z-index: 160;">
     <v-timeline-item :size="'large'" dot-color="white" fill-dot v-for="(exp, i) in resumeTimeline.value" :key="exp" size="small" style="height: 50vh;">
       <div class="resume-item">
-        <v-card style="background-color: inherit;" class="p-0">
+        <v-card style="background-color: inherit; z-index: 161;" class="p-0">
           <div class="overlay"></div>
           <v-card-text class="p-2">
             <div>
@@ -36,7 +36,7 @@
         <div v-if="i === 3">
           <div style="position: absolute; width: 100%; left: 0; bottom: 0; height: 70%;">
             <!-- Particles -->
-            <vue-particles id="tsparticles" :options="particlesOptions" style=" z-index: 9999; height: 100%;" />
+            <vue-particles id="rockparticles" :options="particlesOptions" style=" z-index: 150; height: 100%;" />
           </div>
         </div>
       </template>
@@ -52,7 +52,7 @@
 </template>
 
 <script setup>
-import { onMounted, onBeforeUnmount, ref } from "vue";
+import { onMounted, ref } from "vue";
 import { particlesOptions } from './../plugins/space-rocks'
 
 const resumeTimeline = ref([]);

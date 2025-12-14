@@ -3,11 +3,9 @@
     <v-main>
       <!-- <router-view /> -->
       <main class="main">
-        <!-- Particles -->
-        <!-- <vue-particles id="tsparticles" :options="particlesOptions" style=" z-index: 9999;" /> -->
-
+        <!-- Outer Section -->
         <section id="outer" class="hero section dark-background d-flex align-items-end"
-          style="height: 310vh; width: 100vw; padding: 0;">
+          style="height: 410vh; width: 100vw; padding: 0;">
 
           <v-parallax src="./assets/img/sky2.png" style="height: 100%;">
             <div class="overlay"></div>
@@ -18,6 +16,42 @@
                 <BlackHole />
               </div>
 
+              <!-- services -->
+              <div id="services" class="p-3 d-flex flex-column" style=" position: relative; z-index: 111;">
+                <v-item-group class="mb-4 mt-auto">
+                  <v-row class="">
+                    <v-col v-for="service, index in services" :key="service" cols="12" sm="12" lg="4" class="">
+                      <v-item class="h-100">
+                        <v-card style="background-color: inherit;" class="elevation-10 w-100 h-100">
+                          <v-card-title>
+                            <div class="w-100 d-flex justify-center">
+                              <div class="d-flex justify-center align-center"
+                                style="width: 64px; height: 64px; border-radius: 50%; border: 1px solid white;">
+                                <i :class="service.icon"></i>
+                              </div>
+                            </div>
+                          </v-card-title>
+                          <v-card-text>
+                            <div class="d-flex w-100 p-2 align-center gap-2">
+                              <div>
+                                <h4 :innerHTML="service.title">Web Development</h4>
+                                <p :innerHTML="service.description"></p>
+                              </div>
+                            </div>
+                          </v-card-text>
+                        </v-card>
+                      </v-item>
+                    </v-col>
+                  </v-row>
+                </v-item-group>
+
+                <div class="section-title-up mb-4">
+                  <h2>Services</h2>
+                </div>
+                <hr>
+                </hr>
+              </div>
+
               <!-- Resume Section -->
               <div id="resume" class="p-3 d-flex flex-column mt-auto"
                 style="position: relative; z-index: 111; height: 200vh;">
@@ -26,6 +60,7 @@
                   <h2>Professional Journey</h2>
                 </div>
               </div>
+    
               <hr style="position: relative; z-index: 111;">
               </hr>
             </div>
@@ -38,8 +73,6 @@
 
           <v-parallax src="./assets/img/sky1.png" style="height: 100%;">
             <div class="overlay"></div>
-            <!-- Particles -->
-            <!-- <vue-particles id="tsparticles" :options="particlesOptions" style="position: relative; z-index: 9999;" /> -->
 
             <!-- Secondary Skills -->
             <div id="secondary-skills" class="p-3 d-flex flex-column"
@@ -226,20 +259,10 @@
                                 <i class="bi bi-chevron-right"></i>
                                 <strong>Email:</strong> <span>punyax201@gmail.com</span>
                               </li>
-                              <!-- <li>
-                      <i class="bi bi-chevron-right"></i>
-                      <strong>Freelance:</strong> <span>Available</span>
-                    </li> -->
                             </ul>
                           </div>
                         </div>
-                        <!-- <p class="py-3">
-                Officiis eligendi itaque labore et dolorum mollitia officiis
-                optio vero. Quisquam sunt adipisci omnis et ut. Nulla
-                accusantium dolor incidunt officia tempore. Et eius omnis.
-                Cupiditate ut dicta maxime officiis quidem quia. Sed et
-                consectetur qui quia repellendus itaque neque.
-              </p> -->
+
                       </div>
                     </div>
                   </v-card-text>
@@ -252,14 +275,12 @@
 
         <!-- Hero section -->
         <section id="hero" class="hero section dark-background" style="height: 100vh">
-          <!-- Particles -->
           <div style="
               position: absolute;
               z-index: 999;
               width: 100vw;
               height: 100vh;
             ">
-            <div id="particles-js"></div>
           </div>
           <div class="overlay"></div>
           <img src="./assets/img/hero.png" alt="" data-aos="fade-in" class="" id="default-image" />
@@ -269,7 +290,7 @@
               width: 100%;
               height: 100%;
               object-position: top;
-            " autoplay muted playsinline></video>
+            " muted playsinline></video>
 
           <div class="container d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="100"
             style="height: 100%">
@@ -297,27 +318,23 @@
         </section>
 
         <!-- Scroller -->
-        <div style="position: fixed; right: 1%; top: 10%; z-index: 999; animation-duration: 10s;"
-          class="animate__animated animate__shakeY animate__infinite animate__slower">
-          <img style="width: 50px; height: 50px;" src="./assets/scroll-up.png" @click="start"></img>
-        </div>
+        <Navigator />
+
       </main>
     </v-main>
   </v-app>
 </template>
 
 <script setup>
-import { onMounted, onBeforeUnmount, ref } from "vue";
+import { onMounted, ref } from "vue";
 import Typed from "typed.js";
-import Lenis from "lenis";
 import { shallowRef } from 'vue'
 
-import { particlesOptions } from './plugins/particles-init'
 import Resume from './components/Resume.vue'
 import BlackHole from './components/BlackHole.vue'
+import Navigator from './components/Navigator.vue'
 
-const videoContainer = ref(null);
-const heroImage = ref(null);
+
 const aboutVideo = ref(null);
 const progressValue = shallowRef({
   genAI: 60,
@@ -326,12 +343,14 @@ const progressValue = shallowRef({
   azure: 70,
   cms: 65
 })
-let lenis = null;
-let rafId = null;
+
 let avatarSize = 150;
+
+let services = [];
 
 onMounted(() => {
   window.scrollTo(0, document.documentElement.scrollHeight);
+
   new Typed(".typed", {
     strings: ["Human", "Software Developer and AI Generalist"],
     typeSpeed: 50,
@@ -339,17 +358,23 @@ onMounted(() => {
     backSpeed: 25,
   });
 
-  lenis = new Lenis({
-    duration: 1.2, // base duration (seconds)
-    smooth: true,
-    // optional easing: (t) => t
-  });
-
-  function raf(time) {
-    lenis.raf(time);
-    rafId = requestAnimationFrame(raf);
-  }
-  rafId = requestAnimationFrame(raf);
+  services = [
+    {
+      title: 'Web Application Development',
+      description: 'Building fast, scalable, and maintainable web applications using modern frameworks like <strong   >Angular, Python (Django / FastAPI), and Vue.js.</strong > I specialize in modular architecture, API-driven workflows, and clean UI implementations that perform as well as they look.',
+      icon: 'bi bi-globe'
+    },
+    {
+      title: 'AI Integration & Automation',
+      description: 'Bridging real-world software with intelligent systems. I integrate Generative AI, LLMs, and machine learning APIs into products to automate workflows, analyze data, or enhance user experience.',
+      icon: 'bi bi-card-checklist'
+    },
+    {
+      title: 'Creative AI Tools & Experiences',
+      description: 'Merging engineering and imagination — I design interactive AI experiences for web, marketing, and portfolios. <p> <strong>Example projects:</strong> Image & video generation utilities, AI-driven mini games / web experiences, Visual storytelling tools </p>',
+      icon: 'bi bi-brush'
+    }
+  ]
 
   aboutVideo.value = document.querySelector(".bout-content v-avatar");
   const w = window.innerWidth;
@@ -369,30 +394,5 @@ onMounted(() => {
   // avatarVideo.autoplay = true;
 });
 
-onBeforeUnmount(() => {
-  if (rafId) cancelAnimationFrame(rafId);
-  lenis = null;
-});
 
-function start() {
-  videoContainer.value = document.querySelector("#hero video");
-  heroImage.value = document.querySelector("#hero #default-image");
-  // window.alert('s')
-  heroImage.value.style.display = "none";
-  videoContainer.value.style.opacity = "1";
-  videoContainer.value.pause();
-
-  setTimeout(() => {
-
-    videoContainer.value.play();
-    setTimeout(() => {
-      // document.querySelector("#about").scrollIntoView({ behavior: "smooth" });
-      lenis.scrollTo(document.querySelector("#about"), { duration: 70 });
-
-      setTimeout(() => {
-        lenis.scrollTo(document.querySelector("#about"), { duration: 10 });
-      }, 2500)
-    }, 1000);
-  }, 200);
-}
 </script>

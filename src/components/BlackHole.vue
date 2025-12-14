@@ -1,46 +1,51 @@
 <template>
-    <canvas id="glcanvas" style="position: relative; z-index: 222;"></canvas>
+    <div style="position: absolute; width: 100%; inset:0; height: 70%; z-index: 199;">
+        <!-- Particles -->
+        <vue-particles id="bhparticles" :options="options" style=" z-index: 150; height: 100vh;" />
+    </div>
+    <canvas id="glcanvas" style="position: relative; z-index: 222; overflow: hidden;"></canvas>
 </template>
 
 <style scoped>
 canvas {
-  display: block;
-  width: 100%;
-  /* width: 100vw;
+    display: block;
+    width: 100%;
+    /* width: 100vw;
   height: 100vh; */
 }
 </style>
 <script setup>
 import { onBeforeMount, onMounted } from "vue";
+import { options } from './../plugins/blackhole-particles'
 
 onBeforeMount(() => {
-  const canvas = document.createElement("canvas");
-  canvas.id = "glcanvas";
-  canvas.style.height = '50%';
-  canvas.style.width = '100%';
-//   document.body.appendChild(canvas);
+    const canvas = document.createElement("canvas");
+    canvas.id = "glcanvas";
+    canvas.style.height = '50%';
+    canvas.style.width = '100%';
+    //   document.body.appendChild(canvas);
 });
 
 onMounted(() => {
-  const canvas = document.getElementById("glcanvas");
+    const canvas = document.getElementById("glcanvas");
 
-  const gl = canvas.getContext("webgl");
-  if (!gl) {
-    alert("WebGL not supported");
-    return;
-  }
+    const gl = canvas.getContext("webgl");
+    if (!gl) {
+        alert("WebGL not supported");
+        return;
+    }
 
-  // Vertex shader: simple pass-through of positions.
-  const vsSource = `
+    // Vertex shader: simple pass-through of positions.
+    const vsSource = `
         attribute vec2 a_position;
         void main() {
           gl_Position = vec4(a_position, 0.0, 1.0);
         }
       `;
 
-  // Fragment shader: computes a background image layer and an animated layer,
-  // then blends them (animation on top at 50% opacity), with brightness boosting.
-  const fsSource = `
+    // Fragment shader: computes a background image layer and an animated layer,
+    // then blends them (animation on top at 50% opacity), with brightness boosting.
+    const fsSource = `
         precision mediump float;
         uniform float t;
         uniform vec2 r;  // resolution
@@ -110,72 +115,72 @@ onMounted(() => {
         }
       `;
 
-  // Shader compilation utility.
-  function createShader(gl, type, source) {
-    const shader = gl.createShader(type);
-    gl.shaderSource(shader, source);
-    gl.compileShader(shader);
-    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-      console.error(
-        "Shader compile failed with: " + gl.getShaderInfoLog(shader)
-      );
-      gl.deleteShader(shader);
-      return null;
+    // Shader compilation utility.
+    function createShader(gl, type, source) {
+        const shader = gl.createShader(type);
+        gl.shaderSource(shader, source);
+        gl.compileShader(shader);
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+            console.error(
+                "Shader compile failed with: " + gl.getShaderInfoLog(shader)
+            );
+            gl.deleteShader(shader);
+            return null;
+        }
+        return shader;
     }
-    return shader;
-  }
 
-  // Program creation utility.
-  function createProgram(gl, vsSource, fsSource) {
-    const vertexShader = createShader(gl, gl.VERTEX_SHADER, vsSource);
-    const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fsSource);
-    const program = gl.createProgram();
-    gl.attachShader(program, vertexShader);
-    gl.attachShader(program, fragmentShader);
-    gl.linkProgram(program);
-    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-      console.error("Program failed to link: " + gl.getProgramInfoLog(program));
-      gl.deleteProgram(program);
-      return null;
+    // Program creation utility.
+    function createProgram(gl, vsSource, fsSource) {
+        const vertexShader = createShader(gl, gl.VERTEX_SHADER, vsSource);
+        const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fsSource);
+        const program = gl.createProgram();
+        gl.attachShader(program, vertexShader);
+        gl.attachShader(program, fragmentShader);
+        gl.linkProgram(program);
+        if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+            console.error("Program failed to link: " + gl.getProgramInfoLog(program));
+            gl.deleteProgram(program);
+            return null;
+        }
+        return program;
     }
-    return program;
-  }
 
-  const program = createProgram(gl, vsSource, fsSource);
-  gl.useProgram(program);
+    const program = createProgram(gl, vsSource, fsSource);
+    gl.useProgram(program);
 
-  // Get attribute and uniform locations.
-  const positionLocation = gl.getAttribLocation(program, "a_position");
-  const timeLocation = gl.getUniformLocation(program, "t");
-  const resolutionLocation = gl.getUniformLocation(program, "r");
+    // Get attribute and uniform locations.
+    const positionLocation = gl.getAttribLocation(program, "a_position");
+    const timeLocation = gl.getUniformLocation(program, "t");
+    const resolutionLocation = gl.getUniformLocation(program, "r");
 
-  // Set up a full-screen quad.
-  const vertices = new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]);
-  const buffer = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-  gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
-  gl.enableVertexAttribArray(positionLocation);
-  gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+    // Set up a full-screen quad.
+    const vertices = new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]);
+    const buffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+    gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+    gl.enableVertexAttribArray(positionLocation);
+    gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
 
-  // Resize canvas.
-  function resize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
-  }
-  window.addEventListener("resize", resize);
-  resize();
+    // Resize canvas.
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
+    }
+    window.addEventListener("resize", resize);
+    resize();
 
-  let startTime = performance.now();
-  // Render loop.
-  function render() {
-    let currentTime = performance.now();
-    let delta = (currentTime - startTime) / 1000;
-    gl.uniform1f(timeLocation, delta);
-    gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
-    gl.drawArrays(gl.TRIANGLES, 0, 6);
+    let startTime = performance.now();
+    // Render loop.
+    function render() {
+        let currentTime = performance.now();
+        let delta = (currentTime - startTime) / 1000;
+        gl.uniform1f(timeLocation, delta);
+        gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
+        gl.drawArrays(gl.TRIANGLES, 0, 6);
+        requestAnimationFrame(render);
+    }
     requestAnimationFrame(render);
-  }
-  requestAnimationFrame(render);
 });
 </script>

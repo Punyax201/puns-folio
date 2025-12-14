@@ -40,6 +40,8 @@ html, body {
   background: #000;               /* match your page background to avoid white flash */
   overscroll-behavior-y: none;    /* blocks bounce / pull-to-refresh */
   -webkit-overflow-scrolling: auto; /* not necessary for overscroll, but ok */
+  // overflow: hidden;
+  // position: fixed;
 }
 
 #particles-js{
@@ -307,4 +309,8 @@ h6 {
 #look-around {
   object-position: right;
   object-fit: cover;
+}
+
+.down-btn img{
+  transform: rotateZ(180deg);
 }

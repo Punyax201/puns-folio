@@ -8,6 +8,7 @@
 import { registerPlugins } from "@/plugins";
 import Particles from "@tsparticles/vue3";
 import { loadFull } from "tsparticles";
+import { loadAbsorbersPlugin } from "@tsparticles/plugin-absorbers";
 
 // Components
 import App from "./App.vue";
@@ -21,6 +22,7 @@ import "unfonts.css";
 const app = createApp(App);
 app.use(Particles, {
   init: async (engine) => {
+    await loadAbsorbersPlugin(engine);
     await loadFull(engine); // you can also load only needed plugins to keep it light
   },
 });

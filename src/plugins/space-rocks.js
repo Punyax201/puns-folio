@@ -1,11 +1,10 @@
 const rockSrc = new URL("../assets/img/rock.png", import.meta.url).href;
-console.log(rockSrc);
 export const particlesOptions = {
   fullScreen: { enable: false },
   fpsLimit: 60,
   particles: {
     number: {
-      value: 55,
+      value: 30,
       density: { enable: true, area: 1200 },
     },
     color: { value: "#fff" },
@@ -24,7 +23,7 @@ export const particlesOptions = {
     },
     move: {
       enable: true,
-      speed: 20,
+      speed: 15,
       direction: "right",
       random: true,
       outModes: { default: "out" },
