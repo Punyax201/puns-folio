@@ -3,7 +3,7 @@ export const pcOptions = {
   fpsLimit: 60,
   particles: {
     number: {
-      value: 20,
+      value: 25,
       density: { enable: true, area: 1200 },
     },
     color: { value: "#fff" },
@@ -20,7 +20,7 @@ export const pcOptions = {
       enable: true,
       speed: 1,
       direction: "top",
-      "decay": 0.005
+      decay: 0.005,
     },
     collisions: {
       enable: true, // Must be enabled globally

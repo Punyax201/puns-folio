@@ -1,22 +1,26 @@
 <template>
   <!-- <v-container class="fill-height"> -->
-  <v-timeline style="position: relative; z-index: 160;">
-    <v-timeline-item :size="'large'" dot-color="white" fill-dot v-for="(exp, i) in resumeTimeline.value" :key="exp" size="small" style="height: 50vh;">
+
+  <!-- PC -->
+  <v-timeline v-if="!isMobile" style="position: relative; z-index: 160;">
+    <v-timeline-item :size="'large'" dot-color="white" fill-dot v-for="(exp, i) in resumeTimeline.value" :key="exp"
+      size="small">
       <div class="resume-item">
         <v-card style="background-color: inherit; z-index: 161;" class="p-0">
           <div class="overlay"></div>
           <v-card-text class="p-2">
             <div>
               <!-- <h4>{{ exp.title }}</h4> -->
-              <h5>{{ exp.company }}</h5>
-              <h6>{{ exp.fromTo }}</h6>
+              <h5 class="text-body-1 m-0">{{ exp.company }}</h5>
+              <h6 class="text-overline font-weight-light" style="line-height: 1rem; font-size: 0.6rem !important;">{{
+                exp.fromTo }}</h6>
             </div>
             <hr>
             </hr>
           </v-card-text>
-          <v-card-actions class="p-0 mt-5">
+          <v-card-actions class="mt-0">
             <div>
-              <h6 v-for="detail in exp.details" :innerHTML="detail">
+              <h6 v-for="detail in exp.details" class="text-body-1" :innerHTML="detail">
               </h6>
             </div>
           </v-card-actions>
@@ -25,7 +29,7 @@
       <template #opposite>
         <v-card-text class="p-0">
           <div>
-            <h5>{{ exp.title }}</h5>
+            <h5 class="text-h5">{{ exp.title }}</h5>
           </div>
         </v-card-text>
         <div v-if="i === 0">
@@ -41,11 +45,59 @@
         </div>
       </template>
       <template v-slot:icon>
-          <div class="d-flex flex-column justify-center align-center gap-0 p-1" style="height: 100%;">
-            <span v-if="exp.duration.years !== 0" style="font-size: 0.8rem;">{{ `${exp.duration.years} ${exp.duration.years === 1 ? 'yr' : 'yrs'}` }}</span>
-            <span v-if="exp.duration.months !== 0" style="font-size: 0.5rem;">{{ exp.duration.months }} months</span>
+        <div class="d-flex flex-column justify-center align-center gap-0 p-1" style="height: 100%;">
+          <span v-if="exp.duration.years !== 0" style="font-size: 0.8rem;">{{ `${exp.duration.years}
+            ${exp.duration.years === 1 ? 'yr' : 'yrs'}` }}</span>
+          <span v-if="exp.duration.months !== 0" style="font-size: 0.5rem;">{{ exp.duration.months }} months</span>
+        </div>
+      </template>
+    </v-timeline-item>
+  </v-timeline>
+
+  <!-- MOBILE -->
+  <v-timeline align="start" side="start" v-if="isMobile" style="position: relative; z-index: 160; height: 100%;">
+    <v-timeline-item :size="'large'" dot-color="white" fill-dot v-for="(exp, i) in resumeTimeline.value" :key="exp"
+      size="small">
+      <div class="resume-item">
+        <v-card style="background-color: inherit; z-index: 161;" class="p-0">
+          <div class="overlay"></div>
+          <v-card-text class="p-2">
+            <div>
+              <h4 class="text-h6">{{ exp.title }}</h4>
+              <!-- <h4>{{ exp.title }}</h4> -->
+              <h5 class="text-body-1 m-0">{{ exp.company }}</h5>
+              <h6 class="text-overline font-weight-light" style="line-height: 1rem; font-size: 0.6rem !important;">{{
+                exp.fromTo }}</h6>
+            </div>
+            <hr>
+            </hr>
+          </v-card-text>
+          <v-card-actions class="mt-0">
+            <div>
+              <h6 v-for="detail in exp.details" class="text-body-1" :class="isMobile ? 'overflow-y-scroll' : ''"
+                :innerHTML="detail">
+              </h6>
+            </div>
+          </v-card-actions>
+        </v-card>
+      </div>
+
+      <template #opposite>
+        <div v-if="i === 3">
+          <div style="position: absolute; width: 100%; left: 0; bottom: 0; height: 70%;">
+            <!-- Particles -->
+            <vue-particles id="rockparticles" :options="particlesOptions" style=" z-index: 150; height: 100%;" />
           </div>
-        </template>
+        </div>
+      </template>
+
+      <template v-slot:icon>
+        <div class="d-flex flex-column justify-center align-center gap-0 p-1" style="height: 100%;">
+          <span v-if="exp.duration.years !== 0" style="font-size: 0.8rem;">{{ `${exp.duration.years}
+            ${exp.duration.years === 1 ? 'yr' : 'yrs'}` }}</span>
+          <span v-if="exp.duration.months !== 0" style="font-size: 0.5rem;">{{ exp.duration.months }} months</span>
+        </div>
+      </template>
     </v-timeline-item>
   </v-timeline>
   <!-- </v-container> -->
@@ -54,6 +106,13 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { particlesOptions } from './../plugins/space-rocks'
+
+const props = defineProps({
+  isMobile: {
+    type: Boolean,
+    default: false
+  }
+});
 
 const resumeTimeline = ref([]);
 onMounted(() => {

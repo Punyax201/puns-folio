@@ -4,7 +4,7 @@
     <vue-particles v-if="canvasOptions" id="bhparticles" :options="canvasOptions"
       style=" z-index: 150; height: 100vh; position: absolute; inset: 0;" />
   </div>
-  <canvas id="glcanvas" style="position: relative; z-index: 222; overflow: hidden;"></canvas>
+  <canvas id="glcanvas" style="position: relative; z-index: 222; overflow: hidden; width: auto;"></canvas>
 </template>
 
 <style scoped>
@@ -16,26 +16,22 @@ canvas {
 }
 </style>
 <script setup>
-import { onBeforeMount, onMounted, ref } from "vue";
+import { onMounted, ref } from "vue";
 import { options } from './../plugins/blackhole-particles'
 import { pcOptions } from './../plugins/blackhole-particles-pc'
 
 const canvasOptions = ref(null);
-
-onBeforeMount(() => {
-  const canvas = document.createElement("canvas");
-  canvas.id = "glcanvas";
-  canvas.style.height = '50%';
-  canvas.style.width = '100%';
-  //   document.body.appendChild(canvas);
-});
+let canvasRef = null;
+let particlesCanvasRef = null;
 
 onMounted(() => {
   // calculate window width to determine pc or mobile
-  const isMobile = window.innerWidth <= 768;
+  const isMobile = window.innerWidth <= 780;
   canvasOptions.value = isMobile ? options : pcOptions;
 
   const canvas = document.getElementById("glcanvas");
+  canvasRef = canvas;
+  particlesCanvasRef = document.querySelector("#bhparticles canvas");
 
   const gl = canvas.getContext("webgl");
   if (!gl) {
@@ -190,5 +186,29 @@ onMounted(() => {
     requestAnimationFrame(render);
   }
   requestAnimationFrame(render);
+
+  window.addEventListener("resize", resizeCanvas);
+  window.visualViewport?.addEventListener("resize", resizeCanvas);
 });
+
+function resizeCanvas() {
+  const gl = canvasRef.getContext("webgl");
+  const dpr = window.devicePixelRatio || 1;
+
+  const width = window.visualViewport
+    ? window.visualViewport.width
+    : window.innerWidth;
+
+  const height = window.visualViewport
+    ? window.visualViewport.height
+    : window.innerHeight;
+
+  canvasRef.width = Math.round(width * dpr);
+  canvasRef.height = Math.round(height * dpr);
+
+  canvasRef.style.width = `${width}px`;
+  canvasRef.style.height = `${height}px`;
+
+  gl.viewport(0, 0, canvasRef.width, canvasRef.height);
+}
 </script>

@@ -3,7 +3,7 @@ export const options = {
   fpsLimit: 60,
   particles: {
     number: {
-      value: 20,
+      value: 25,
       density: { enable: true, area: 1200 },
     },
     color: { value: "#fff" },
@@ -20,7 +20,7 @@ export const options = {
       enable: true,
       speed: 1,
       direction: "top",
-      "decay": 0.005
+      decay: 0.005,
     },
     collisions: {
       enable: true, // Must be enabled globally
@@ -50,7 +50,7 @@ export const options = {
     {
       position: {
         x: 50,
-        y: 43,
+        y: 50,
       },
       options: {
         color: {
@@ -58,7 +58,7 @@ export const options = {
         },
         size: {
           value: 100,
-          density: 100,
+          density: 1000,
         },
         enable: true,
         speed: 300, // How fast particles are pulled in

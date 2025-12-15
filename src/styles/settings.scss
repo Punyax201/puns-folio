@@ -1,4 +1,4 @@
-@import url('./../../node_modules/lenis/dist/lenis.css');
+@import url("./../../node_modules/lenis/dist/lenis.css");
 /**
  * src/styles/settings.scss
  *
@@ -10,13 +10,15 @@
 //   $color-pack: false
 // );
 :root {
-  --default-font: "Roboto",  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --heading-font: "Raleway",  sans-serif;
-  --nav-font: "Poppins",  sans-serif;
+  --default-font: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --heading-font: "Raleway", sans-serif;
+  --nav-font: "Poppins", sans-serif;
 }
 
 /* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
-:root { 
+:root {
   --background-color: #ffffff; /* Background color for the entire website, including individual sections */
   --default-color: #272829; /* Default color used for the majority of the text content across the entire website */
   --heading-color: #050d18; /* Color for headings, subheadings and title throughout the website */
@@ -27,7 +29,7 @@
 
 /* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
 :root {
-  --nav-color: #a8a9b4;  /* The default color of the main navmenu links */
+  --nav-color: #a8a9b4; /* The default color of the main navmenu links */
   --nav-hover-color: #ffffff; /* Applied to main navmenu links when they are hovered over or active */
   --nav-mobile-background-color: #040b14; /* Used as the background color for mobile navigation menu */
   --nav-dropdown-background-color: #040b14; /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
@@ -35,16 +37,55 @@
   --nav-dropdown-hover-color: #ffffff; /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
 }
 
-html, body {
+html,
+body {
   height: 100%;
-  background: #000;               /* match your page background to avoid white flash */
-  overscroll-behavior-y: none;    /* blocks bounce / pull-to-refresh */
+  background: #000; /* match your page background to avoid white flash */
+  overscroll-behavior-y: none; /* blocks bounce / pull-to-refresh */
   -webkit-overflow-scrolling: auto; /* not necessary for overscroll, but ok */
   // overflow: hidden;
   // position: fixed;
+  pointer-events: unset !important;
 }
 
-#particles-js{
+body {
+  background-color: transparent;
+  transition: background-color 0.6s ease-in-out !important;
+}
+
+.navigation-tabs button {
+  font-size: 0.4rem !important;
+}
+
+.black-bg {
+  background-color: #000 !important;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+#app-splash {
+  position: fixed;
+  inset: 0;
+  background: #000; /* match your theme */
+  z-index: 9999;
+  border: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+#app-splash.hide {
+  opacity: 0;
+  visibility: hidden;
+  display: none;
+}
+
+#particles-js {
   /* position: absolute; */
   /* top: 0;
   bottom: 0; */
@@ -129,9 +170,14 @@ h6 {
   display: block;
   width: 50px;
   height: 3px;
-  background: #fff;
+  background: #00e4ff;
   left: 0;
   bottom: 0;
+}
+
+.section-title-dash-text {
+  top: 50%;
+  left: 8%;
 }
 
 .section-title-up {
@@ -175,8 +221,17 @@ h6 {
 .overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.0));
+  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0));
   z-index: 101;
+}
+
+// .overlay, .overlay *  {
+//   pointer-events: none;
+// }
+
+.v-responsive__content {
+  z-index: 999 !important;
+  pointer-events: unset !important;
 }
 
 .about-content::after {
@@ -208,7 +263,7 @@ h6 {
     height: 100svh;
   }
 } */
- 
+
 // @media (max-width: 768px) {
 //   .hero {
 //     height: 90vh !important;
@@ -278,20 +333,6 @@ h6 {
   color: var(--accent-color);
 }
 
-.resume-item {
-  h4 {
-    font-size: 0.8rem;
-  }
-
-  h5 {
-    font-size: 0.7rem;
-  }
-
-  h6 {
-    font-size: 0.7rem;
-  }
-}
-
 .satellite-img {
   width: 20vh !important;
   position: relative !important;
@@ -304,6 +345,11 @@ h6 {
     position: relative !important;
     animation-duration: 18s !important;
   }
+
+  .section-title-dash-text {
+    top: 50%;
+    left: 20%;
+  }
 }
 
 #look-around {
@@ -311,6 +357,7 @@ h6 {
   object-fit: cover;
 }
 
-.down-btn img{
+.down-btn img {
   transform: rotateZ(180deg);
 }
+

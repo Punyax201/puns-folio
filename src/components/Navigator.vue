@@ -5,6 +5,18 @@
         <img style="width: 50px; height: 50px;" src="./../assets/scroll-up.png" @click="up()"></img>
     </div>
 
+    <!-- Speed dial -->
+    <div style="position: fixed; right: 1%; top: 30%; z-index: 1999; animation-duration: 10s;">
+        <v-tabs v-model="tab" direction="vertical navigation-tabs">
+            <v-tab class="text-overline font-weight-thin" value="Option 1" text="SINGULARITY"></v-tab>
+            <v-tab class="text-overline font-weight-thin" value="Option 1" text="SERVICES"></v-tab>
+            <v-tab class="text-overline font-weight-thin" value="Option 2" text="RESUME"></v-tab>
+            <v-tab class="text-overline font-weight-thin" value="Option 1" text="SECONDARY SKILLS"></v-tab>
+            <v-tab class="text-overline font-weight-thin" value="Option 2" text="SKILLS"></v-tab>
+            <v-tab class="text-overline font-weight-thin" value="Option 3" text="ABOUT"></v-tab>
+        </v-tabs>
+    </div>
+
     <div style="position: fixed; right: 1%; bottom: 10%; z-index: 1999; animation-duration: 10s; transform: rotateZ(180deg);"
         class="down-btn animate__animated animate__shakeY animate__infinite animate__slower">
         <img style="width: 50px; height: 50px;" src="./../assets/scroll-up.png" @click="down()"></img>

@@ -56,7 +56,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Punya Kotecha</title>
   </head>
-  <body>
+  <body class="black-bg">
+    <!-- Splash screen -->
+    <div id="app-splash">
+      <div class="loader">
+        <img src="./src/assets/clips/endurance.gif" alt="Loading..." />
+      </div>
+      <h3 style="color: white;">Loading...</h3>
+    </div>
+
+    <!-- Vue app -->
+    <div id="app"></div>
     <div id="app"></div>
     <script type="module" src="/src/main.js">
       window.scrollTo(0, document.documentElement.scrollHeight);
