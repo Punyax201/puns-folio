@@ -247,7 +247,7 @@
                               <li>
                                 <span class="d-flex flex-column">
                                   <div class="font-weight-bold">Education</div>
-                                  <div class="font-weight-light text-overline">B.Tech (Information Texhnology)</div>
+                                  <div class="font-weight-light text-overline">B.Tech (Information Technology)</div>
                                 </span>
                               </li>
                             </ul>

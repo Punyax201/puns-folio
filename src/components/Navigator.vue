@@ -183,6 +183,8 @@ function down(step = -1) {
         currentStep = step;
     }
 
+    if (currentStep < 0) return;
+
     switch (currentStep) {
         case 0:
             scrollToElement = document.querySelector("#hero");
