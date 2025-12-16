@@ -4,7 +4,8 @@ export const pcOptions = {
   particles: {
     number: {
       value: 25,
-      density: { enable: true, area: 1200 },
+      density: { enable: true, area: 600 },
+      limit: 20
     },
     color: { value: "#fff" },
     shape: {
@@ -52,21 +53,12 @@ export const pcOptions = {
         x: 50,
         y: 50,
       },
-      options: {
-        color: {
-          value: "transparent", // Set to canvas background color for an invisible effect
+      color: '#011125',
+      size: {
+          value: 15,
+          density: 40,
         },
-        size: {
-          value: 100,
-          density: 100,
-        },
-        enable: true,
-        speed: 300, // How fast particles are pulled in
-        collisions: {
-          enable: true, // Collisions for the absorber itself must be enabled
-          overlap: false, // <-- This is the key: set to false to destroy the particle
-        },
-      },
+      speed: 3, 
     },
   ],
   detectRetina: true,

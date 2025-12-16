@@ -4,7 +4,7 @@
       <!-- <router-view /> -->
       <main class="main">
         <!-- Outer Section -->
-        <section id="outer" class="hero section dark-background d-flex align-items-end"
+        <section v-if="initialize" id="outer" class="hero section dark-background d-flex align-items-end"
           style="height: auto; width: 100vw; padding: 0;">
 
           <v-parallax src="./assets/img/sky2.png" style="height: 100%;">
@@ -12,12 +12,12 @@
 
             <div class="d-flex flex-column" style="height: 100%;">
               <!-- Black hole -->
-              <div style="width: 100%; height: 100vh;">
-                <BlackHole />
+              <div style="width: 100%; height: 100svh; position: relative;">
+                <BlackHoleAsync v-if="isVisible" />
               </div>
 
               <!-- services -->
-              <div id="services" :class="isMobile ? 'p-4' : 'p-5'" class="d-flex flex-column"
+              <div ref="container" id="services" :class="isMobile ? 'p-4' : 'p-5'" class="d-flex flex-column"
                 style=" position: relative; z-index: 111;">
                 <v-item-group class="mb-4 mt-auto">
                   <v-row class="">
@@ -55,9 +55,9 @@
 
               <!-- Resume Section -->
               <div id="resume" :class="isMobile ? 'p-4' : 'p-5'" class="d-flex flex-column justify-space-between"
-                style="position: relative; z-index: 111; height: 350vh;">
+                style="position: relative; z-index: 111; height: 350svh;">
                 <Resume :isMobile="isMobile" />
-                
+
                 <div class="section-title-up mb-4">
                   <h2>Professional Journey</h2>
                 </div>
@@ -70,15 +70,15 @@
 
         </section>
         <!-- Extension Section -->
-        <section id="extension" class="hero section dark-background d-flex align-items-end"
-          style="height: 310vh; width: 100vw; padding: 0;">
+        <section v-if="initialize" id="extension" class="hero section dark-background d-flex align-items-end"
+          style="height: 310svh; width: 100vw; padding: 0;">
 
           <v-parallax src="./assets/img/sky1.png" style="height: 100%;">
             <div class="overlay"></div>
 
             <!-- Secondary Skills -->
             <div id="secondary-skills" :class="isMobile ? 'p-4' : 'p-5'" class="d-flex flex-column"
-              style="height: 100vh; z-index: 999; width: 100vw; position: relative;">
+              style="height: 100svh; z-index: 999; width: 100vw; position: relative;">
               <div>
                 <div class="section-title mb-4">
                   <h2>Secondary Skills</h2>
@@ -94,7 +94,8 @@
                     <v-col cols="12" lg="6" sm="12">
                       <v-card style="background-color: inherit;" data-aos="fade-up" data-aos-delay="300">
                         <v-card-text>
-                          <v-img aspect-ratio="16/9" :height="isMobile ? 200 : 300" cover src="./assets/img/3d-print-1.jpg"></v-img>
+                          <v-img aspect-ratio="16/9" :height="isMobile ? 200 : 300" cover
+                            src="./assets/img/3d-print-1.jpg"></v-img>
                         </v-card-text>
                         <v-card-subtitle class="text-body-1">
                           <h4>3D Printing</h4>
@@ -106,9 +107,10 @@
                     </v-col>
 
                     <v-col cols="12" lg="6" sm="12">
-                      <v-card style="background-color: inherit;">
+                      <v-card style="background-color: inherit;" data-aos="fade-up" data-aos-delay="300">
                         <v-card-text>
-                          <v-img aspect-ratio="16/9" :height="isMobile ? 200 : 300" cover src="./assets/img/pi.jpg"></v-img>
+                          <v-img aspect-ratio="16/9" :height="isMobile ? 200 : 300" cover
+                            src="./assets/img/pi.jpg"></v-img>
                         </v-card-text>
                         <v-card-subtitle class="text-body-1">
                           <h4>Raspberry Pi</h4>
@@ -128,7 +130,7 @@
 
             <!-- Skills -->
             <div id="skills" :class="isMobile ? 'p-4' : 'p-5'" class="d-flex flex-column"
-              style="height: 100vh; z-index: 999; width: 100vw; position: relative;">
+              style="height: 100svh; z-index: 999; width: 100vw; position: relative;">
               <div>
                 <div class="section-title mb-4">
                   <h2>Skills</h2>
@@ -194,7 +196,7 @@
 
             <!-- About -->
             <div id="about" :class="isMobile ? 'p-4' : 'p-5'" class=""
-              style="height: 100vh; z-index: 999; width: 100vw; position: relative;">
+              style="height: 100svh; z-index: 999; width: 100vw; position: relative;">
               <div>
                 <div class="section-title mb-4">
                   <h2>
@@ -224,6 +226,7 @@
                       <div class="col-lg-8 col-sm-12 content p-0" :class="isMobile ? 'mt-0' : 'mt-4'">
 
                         <div class="d-flex flex-column h-100 justify-start">
+
                           <div id="details" class="flex p-0 flex-row mt-0">
                             <ul style="list-style-type: none; list-style: none; flex-wrap: wrap;" class="d-flex p-0"
                               :class="isMobile ? 'gap-0' : 'gap-4'">
@@ -247,23 +250,49 @@
                                   <div class="font-weight-light text-overline">B.Tech (Information Texhnology)</div>
                                 </span>
                               </li>
+                            </ul>
+                          </div>
+
+                          <div id="contact-details" class="flex p-0 flex-row mt-0">
+                            <ul style="list-style-type: none; list-style: none; flex-wrap: wrap;" class="d-flex p-0"
+                              :class="isMobile ? 'gap-3' : 'gap-4'">
                               <li>
                                 <span class="d-flex flex-column">
-                                  <div class="font-weight-bold">Email</div>
-                                  <div class="font-weight-light text-overline">punyax201@gmail.com</div>
+                                  <div class="d-flex justify-center align-center"
+                                    style="width: 48px; height: 48px; border-radius: 50%;">
+                                    <v-btn
+                                      @click="navigateToUrl('https://www.linkedin.com/in/punya-kotecha-0208a3131/')"
+                                      variant="outlined" density="default" icon="bi bi-linkedin"></v-btn>
+                                  </div>
+
+                                </span>
+                              </li>
+                              <li>
+                                <span class="d-flex flex-column">
+                                  <div class="d-flex justify-center align-center"
+                                    style="width: 48px; height: 48px; border-radius: 50%;">
+                                    <v-btn @click="navigateToUrl('mailto:punyax201@gmail.com')" variant="outlined"
+                                      density="default" icon="bi bi-envelope">
+                                      <v-icon>
+                                        bi bi-envelope
+                                      </v-icon>
+                                      <v-tooltip activator="parent" location="end">punyax201@gmail.com</v-tooltip>
+                                    </v-btn>
+                                  </div>
                                 </span>
                               </li>
                             </ul>
                           </div>
 
-                          <div class="mt-auto mb-5" :class="isMobile ? 'w-100' : 'w-75'">
+                          <div class="mt-auto" :class="isMobile ? 'w-100 mb-1' : 'w-75 mb-5'">
                             <div class="section-title mb-5">
                               <h2></h2>
-                              <span class="font-weight-light position-absolute section-title-dash-text">SOMETHING
+                              <span
+                                class="text-body-1 font-weight-light position-absolute section-title-dash-text">SOMETHING
                                 <span style="color: #00E4FF;">ABOUT ME</span></span>
                             </div>
-                            <h2>I am a <strong>Software Engineer</strong> &amp; <strong>AI Generalist</strong></h2>
-                            <p class="fst-italic py-3 text-body-1">
+                            <h2><em>I am a <em>Software Engineer</em> &amp; <em>AI Generalist</em></em></h2>
+                            <p class=" py-3 text-body-1 font-weight-light">
                               Passionate about leveraging <strong>Generative AI</strong>, with
                               hands-on experience implementing RAG (Retrieval-Augmented
                               Generation) workflows and integrating AI-driven features into
@@ -278,7 +307,7 @@
                       <div class="col-lg-4 col-sm-12 d-flex justify-center">
                         <v-avatar :size="avatarSize">
                           <!-- <img id="default-image" src="./assets/img/clip.png" width="300"></img> -->
-                          <video :width="avatarSize" id="look-around" autoplay muted loop playsinline preload="auto"
+                          <video :width="avatarSize" autoplay muted loop playsinline preload="auto"
                             disablePictureInPicture controls="false" tabindex="-1"
                             src="./assets/clips/lappy.mp4"></video>
                         </v-avatar>
@@ -293,17 +322,17 @@
         </section>
 
         <!-- Hero section -->
-        <section id="hero" class="hero section dark-background" style="height: 100vh">
+        <section id="hero" class="hero section dark-background" style="height: 100svh">
           <div style="
               position: absolute;
               z-index: 999;
               width: 100vw;
-              height: 100vh;
+              height: 100svh;
             ">
           </div>
           <div class="overlay"></div>
-          <img src="./assets/img/hero.png" alt="" data-aos="fade-in" class="" id="default-image" />
-          <video id="look-around" src="./assets/clips/start.mp4" alt="" data-aos="fade-in" class="" style="
+          <img src="./assets/img/hero.png" alt="" class="" id="default-image" />
+          <video id="look-around" src="./assets/clips/start.mp4" alt="" class="" style="
               position: absolute;
               object-fit: cover;
               width: 100%;
@@ -311,7 +340,7 @@
               object-position: top;
             " muted playsinline></video>
 
-          <div class="container d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="100"
+          <div class="container d-flex flex-column justify-content-center"
             style="height: 100%">
             <!-- Namaskaram -->
             <div class="namaskaram mt-auto">
@@ -346,16 +375,19 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, defineAsyncComponent } from "vue";
 import Typed from "typed.js";
 import { shallowRef } from 'vue'
 import 'aos/dist/aos.css'
 import AOS from 'aos'
 
 import Resume from './components/Resume.vue'
-import BlackHole from './components/BlackHole.vue'
+// import BlackHole from './components/BlackHole.vue'
 import Navigator from './components/Navigator.vue'
 
+const BlackHoleAsync = defineAsyncComponent(() =>
+  import("./components/BlackHole.vue")
+);
 
 const aboutVideo = ref(null);
 const progressValue = shallowRef({
@@ -371,20 +403,14 @@ let avatarSize = 350;
 let services = [];
 
 let isMobile = false;
+const initialize = ref(false);
+
+const container = ref(null);
+const isVisible = ref(false);
+
+let observer;
 
 onMounted(async () => {
-  // await waitForResources();
-  window.onload = function () {
-    setTimeout(function () {
-      requestAnimationFrame(() => {
-        document.getElementById("app-splash")?.classList.add("hide");
-        document.body?.classList.add("black-bg");
-      });
-    }, 1000);
-  };
-  isMobile = window.innerWidth <= 780;
-  window.scrollTo(0, document.documentElement.scrollHeight);
-
   new Typed(".typed", {
     strings: ["Human", "Software Developer and AI Generalist"],
     typeSpeed: 50,
@@ -392,11 +418,38 @@ onMounted(async () => {
     backSpeed: 25,
   });
 
+
   AOS.init({
     duration: 800,
     easing: 'ease-in-out',
     once: false, // whether animation should happen only once
   })
+
+  // await waitForResources();
+  isMobile = window.innerWidth <= 780;
+
+  window.onload = function () {
+    initialize.value = true;
+    initAllSections();
+    document.querySelector('#hero').scrollIntoView({ behavior: 'instant' });
+
+    // scroll to bottom of page
+    window.scrollTo(0, document.body.scrollHeight);
+
+    setTimeout(function () {
+      requestAnimationFrame(() => {
+        // window.scrollTo(0, document.body.scrollHeight);
+        document.querySelector('#hero').scrollIntoView({ behavior: 'instant' });
+        const splash = document.querySelector("#app-splash");
+        if (splash) {
+          splash.style.display = "none";
+        }
+      });
+    }, 5000);
+  };
+});
+
+function initAllSections() {
 
   services = [
     {
@@ -426,31 +479,50 @@ onMounted(async () => {
   }
 
   if (w < 600) {
-    avatarSize = 150;
+    avatarSize = 125;
   } else {
     avatarSize = 450;
   }
-  avatarVideo.play();
-  // avatarVideo.autoplay = true;
-});
 
-function waitForResources() {
-  const fontsReady = document.fonts?.ready ?? Promise.resolve();
+  setTimeout(() => {
+    observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          isVisible.value = entry.isIntersecting;
+          // observer.disconnect(); // 🔑 load once only
+        }
+      },
+      {
+        root: null,
+        threshold: 0.05, // 20% visible
+      }
+    );
 
-  const imagesReady = Promise.all(
-    Array.from(document.images)
-      .filter(img => !img.complete)
-      .map(
-        img =>
-          new Promise(resolve => {
-            img.onload = img.onerror = resolve;
-          })
-      )
-  );
-
-  return Promise.all([
-    fontsReady,
-    imagesReady,
-  ]);
+    observer.observe(container.value);
+  }, 8000)
 }
+
+function navigateToUrl(url) {
+  window.open(url, "_blank");
+}
+
+// function waitForResources() {
+//   const fontsReady = document.fonts?.ready ?? Promise.resolve();
+
+//   const imagesReady = Promise.all(
+//     Array.from(document.images)
+//       .filter(img => !img.complete)
+//       .map(
+//         img =>
+//           new Promise(resolve => {
+//             img.onload = img.onerror = resolve;
+//           })
+//       )
+//   );
+
+//   return Promise.all([
+//     fontsReady,
+//     imagesReady,
+//   ]);
+// }
 </script>

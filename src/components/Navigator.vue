@@ -1,31 +1,81 @@
 <template>
-    <!-- Scroller -->
-    <div style="position: fixed; right: 1%; top: 10%; z-index: 1999; animation-duration: 10s;"
+    <!-- Up button -->
+    <div style="position: fixed; right: 3%; top: 10%; z-index: 1999; animation-duration: 10s;"
         class="animate__animated animate__shakeY animate__infinite animate__slower">
-        <img style="width: 50px; height: 50px;" src="./../assets/scroll-up.png" @click="up()"></img>
+        <!-- <img style="width: 50px; height: 50px;" src="./../assets/scroll-up.png" @click="up(-1)"></img> -->
+        <v-btn size="large" base-color="transparent" icon="fa:fas fas fa-chevron-circle-up" @click="up(-1)">
+            <v-icon style="width: 100%;">
+                fa:fas fas fa-chevron-circle-up
+            </v-icon>
+        </v-btn>
     </div>
 
     <!-- Speed dial -->
-    <div style="position: fixed; right: 1%; top: 30%; z-index: 1999; animation-duration: 10s;">
-        <v-tabs v-model="tab" direction="vertical navigation-tabs">
-            <v-tab class="text-overline font-weight-thin" value="Option 1" text="SINGULARITY"></v-tab>
-            <v-tab class="text-overline font-weight-thin" value="Option 1" text="SERVICES"></v-tab>
-            <v-tab class="text-overline font-weight-thin" value="Option 2" text="RESUME"></v-tab>
-            <v-tab class="text-overline font-weight-thin" value="Option 1" text="SECONDARY SKILLS"></v-tab>
-            <v-tab class="text-overline font-weight-thin" value="Option 2" text="SKILLS"></v-tab>
-            <v-tab class="text-overline font-weight-thin" value="Option 3" text="ABOUT"></v-tab>
-        </v-tabs>
+    <div v-if="showSpeedDial"
+        style="position: fixed; right: 3%; top: 50%; transform: translateY(-40%); z-index: 1999; animation-duration: 10s;">
+
+        <v-speed-dial location="left top" transition="fade-transition">
+            <template v-slot:activator="{ props: activatorProps }">
+                <v-fab base-color="transparent" v-bind="activatorProps" size="large"
+                    icon="fa:fas fas fa-rocket"></v-fab>
+            </template>
+
+            <v-btn key="1" @click="up(6)" icon="fa:fas fas fa-radiation">
+                <v-icon>
+                    fa:fas fas fa-radiation
+                </v-icon>
+                <v-tooltip activator="parent" location="end">Singularity</v-tooltip>
+            </v-btn>
+            <v-btn key="1" @click="up(5)" icon="fa:fas fas fa-handshake">
+                <v-icon>
+                    fa:fas fas fa-handshake
+                </v-icon>
+                <v-tooltip activator="parent" location="end">Services</v-tooltip>
+            </v-btn>
+            <v-btn key="1" @click="up(4)" icon="fa:fas fas fa-file">
+                <v-icon>
+                    fa:fas fas fa-file
+                </v-icon>
+                <v-tooltip activator="parent" location="end">Resume</v-tooltip>
+            </v-btn>
+            <v-btn key="2" @click="up(3)" icon="fa:fas fas fa-layer-page">
+                <v-icon>
+                    fa:fas fas fa-layer-group
+                </v-icon>
+                <v-tooltip activator="parent" location="end">Secondary Skills</v-tooltip>
+            </v-btn>
+            <v-btn key="3" @click="up(2)" icon="fa:fas fas fa-desktop" text="Skills">
+                <v-icon>
+                    fa:fas fas fa-desktop
+                </v-icon>
+                <v-tooltip activator="parent" location="end">Skills</v-tooltip>
+            </v-btn>
+            <v-btn key="4" @click="up(1)" icon="fa:fas fas fa-circle-info" text="About">
+                <v-icon>
+                    fa:fas fas fa-circle-info
+                </v-icon>
+                <v-tooltip activator="parent" location="end">About</v-tooltip>
+            </v-btn>
+        </v-speed-dial>
     </div>
 
-    <div style="position: fixed; right: 1%; bottom: 10%; z-index: 1999; animation-duration: 10s; transform: rotateZ(180deg);"
+    <!-- Down button -->
+    <div v-if="showSpeedDial" style="position: fixed; right: 3%; bottom: 10%; z-index: 1999; animation-duration: 10s; transform: rotateZ(180deg); border-radius: 50%;"
         class="down-btn animate__animated animate__shakeY animate__infinite animate__slower">
-        <img style="width: 50px; height: 50px;" src="./../assets/scroll-up.png" @click="down()"></img>
+        <!-- <img style="width: 50px; height: 50px;" src="./../assets/scroll-up.png" @click="down()"></img> -->
+        <v-btn size="large" base-color="transparent" icon="fa:fas fas fa-chevron-circle-down" @click="down()">
+            <v-icon style="width: 100%;">
+                fa:fas fas fa-chevron-circle-down
+            </v-icon>
+        </v-btn>
     </div>
 </template>
 
 <script setup>
 import { onMounted, onBeforeUnmount, ref } from "vue";
 import Lenis from "lenis";
+
+let showSpeedDial = ref(false);
 
 const videoContainer = ref(null);
 const heroImage = ref(null);
@@ -55,9 +105,14 @@ onBeforeUnmount(() => {
     lenis = null;
 });
 
-function up() {
-    if (currentStep >= 6) return;
-    currentStep++;
+function up(step = -1) {
+    if (step !== -1) {
+        currentStep = step;
+    } else {
+        currentStep++;
+    }
+
+    if (currentStep > 6) return;
 
     switch (currentStep) {
         case 1:
@@ -67,6 +122,12 @@ function up() {
             heroImage.value.style.display = "none";
             videoContainer.value.style.opacity = "1";
             videoContainer.value.pause();
+
+            setTimeout(() => {
+                heroImage.value.style.display = "block";
+                videoContainer.value.style.opacity = "0";
+                showSpeedDial.value = true;
+            }, 8500);
 
             scrollToElement = document.querySelector("#about");
             break;
@@ -92,7 +153,7 @@ function up() {
 
     setTimeout(() => {
         if (currentStep === 1) {
-            videoContainer.value.play();
+            videoContainer.value.play()
 
             setTimeout(() => {
                 // document.querySelector("#about").scrollIntoView({ behavior: "smooth" });
@@ -115,8 +176,12 @@ function up() {
     }, 200);
 }
 
-function down() {
+function down(step = -1) {
     currentStep--;
+
+    if (step !== -1) {
+        currentStep = step;
+    }
 
     switch (currentStep) {
         case 0:
@@ -125,12 +190,11 @@ function down() {
         case 1:
             videoContainer.value = document.querySelector("#hero video");
             heroImage.value = document.querySelector("#hero #default-image");
-            // window.alert('s')
-            heroImage.value.style.display = "none";
-            videoContainer.value.style.opacity = "1";
-            videoContainer.value.pause();
-
             scrollToElement = document.querySelector("#about");
+            // setTimeout(() => {
+            //     heroImage.value.style.display = "block";
+            //     videoContainer.value.style.opacity = "0";
+            // }, 8500);
             break;
         case 2:
             scrollToElement = document.querySelector("#skills");
