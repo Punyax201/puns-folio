@@ -295,6 +295,20 @@ h6 {
 //   z-index: 2;
 // }
 
+.about-content video {
+  position: relative;
+  z-index: 1;
+}
+
+.video-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 45, 81, 0.2);
+  z-index: 222;
+  pointer-events: auto;  /* <-- allow overlay to receive pointer events */
+  cursor: default; 
+}
+
 .hero .container {
   position: relative;
   z-index: 3;

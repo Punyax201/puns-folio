@@ -60,7 +60,8 @@
     </div>
 
     <!-- Down button -->
-    <div v-if="showSpeedDial" style="position: fixed; right: 3%; bottom: 10%; z-index: 1999; animation-duration: 10s; transform: rotateZ(180deg); border-radius: 50%;"
+    <div v-if="showSpeedDial"
+        style="position: fixed; right: 3%; bottom: 10%; z-index: 1999; animation-duration: 10s; transform: rotateZ(180deg); border-radius: 50%;"
         class="down-btn animate__animated animate__shakeY animate__infinite animate__slower">
         <!-- <img style="width: 50px; height: 50px;" src="./../assets/scroll-up.png" @click="down()"></img> -->
         <v-btn size="large" base-color="transparent" icon="fa:fas fas fa-chevron-circle-down" @click="down()">
@@ -72,8 +73,10 @@
 </template>
 
 <script setup>
-import { onMounted, onBeforeUnmount, ref } from "vue";
+import { onMounted, onBeforeUnmount, ref, defineEmits } from "vue";
 import Lenis from "lenis";
+
+const emit = defineEmits(["close", "submit"]);
 
 let showSpeedDial = ref(false);
 
@@ -122,14 +125,20 @@ function up(step = -1) {
             heroImage.value.style.display = "none";
             videoContainer.value.style.opacity = "1";
             videoContainer.value.pause();
+            emit("submit", null);
 
             setTimeout(() => {
                 heroImage.value.style.display = "block";
                 videoContainer.value.style.opacity = "0";
-                showSpeedDial.value = true;
             }, 8500);
 
-            scrollToElement = document.querySelector("#about");
+            setTimeout(() => {
+                showSpeedDial.value = true;
+            }, 3000);
+
+            setTimeout(() => {
+                scrollToElement = document.querySelector("#about");
+            }, 300);
             break;
         case 2:
             scrollToElement = document.querySelector("#skills");

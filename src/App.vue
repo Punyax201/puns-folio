@@ -310,6 +310,7 @@
                           <video :width="avatarSize" autoplay muted loop playsinline preload="auto"
                             disablePictureInPicture controls="false" tabindex="-1"
                             src="./assets/clips/lappy.mp4"></video>
+                            <div class="video-overlay" aria-hidden="true"></div>
                         </v-avatar>
                       </div>
                     </div>
@@ -340,8 +341,7 @@
               object-position: top;
             " muted playsinline></video>
 
-          <div class="container d-flex flex-column justify-content-center"
-            style="height: 100%">
+          <div class="container d-flex flex-column justify-content-center" style="height: 100%">
             <!-- Namaskaram -->
             <div class="namaskaram mt-auto">
 
@@ -367,7 +367,7 @@
         </section>
 
         <!-- Scroller -->
-        <Navigator />
+        <Navigator @submit="enableScroll()" />
 
       </main>
     </v-main>
@@ -409,6 +409,19 @@ const container = ref(null);
 const isVisible = ref(false);
 
 let observer;
+let scrollBlocked = false;
+
+function preventDefault(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  e.stopImmediatePropagation();
+}
+
+function preventKeys(e) {
+  // space/page/home/end/arrows
+  const keys = [32, 33, 34, 35, 36, 37, 38, 39, 40];
+  if (keys.includes(e.keyCode)) e.preventDefault();
+}
 
 onMounted(async () => {
   new Typed(".typed", {
@@ -444,6 +457,7 @@ onMounted(async () => {
         if (splash) {
           splash.style.display = "none";
         }
+        disableScroll();
       });
     }, 5000);
   };
@@ -506,23 +520,29 @@ function navigateToUrl(url) {
   window.open(url, "_blank");
 }
 
-// function waitForResources() {
-//   const fontsReady = document.fonts?.ready ?? Promise.resolve();
+function disableScroll() {
+  if (scrollBlocked) return;
+  scrollBlocked = true;
 
-//   const imagesReady = Promise.all(
-//     Array.from(document.images)
-//       .filter(img => !img.complete)
-//       .map(
-//         img =>
-//           new Promise(resolve => {
-//             img.onload = img.onerror = resolve;
-//           })
-//       )
-//   );
+  // CSS fallback to hide scrollbars
+  document.documentElement.style.overflow = 'hidden';
+  document.body.style.overflow = 'hidden';
 
-//   return Promise.all([
-//     fontsReady,
-//     imagesReady,
-//   ]);
-// }
+  // block wheel/touchmove and keyboard navigation
+  window.addEventListener('wheel', preventDefault, { passive: false });
+  window.addEventListener('touchmove', preventDefault, { passive: false });
+  window.addEventListener('keydown', preventKeys, { passive: false });
+}
+
+function enableScroll() {
+  if (!scrollBlocked) return;
+  scrollBlocked = false;
+
+  document.documentElement.style.overflow = '';
+  document.body.style.overflow = '';
+
+  window.removeEventListener('wheel', preventDefault, { passive: false });
+  window.removeEventListener('touchmove', preventDefault, { passive: false });
+  window.removeEventListener('keydown', preventKeys, { passive: false });
+}
 </script>
