@@ -56,7 +56,7 @@
               <!-- Resume Section -->
               <div id="resume" :class="isMobile ? 'p-4' : 'p-5'" class="d-flex flex-column justify-space-between"
                 style="position: relative; z-index: 111; height: 350svh;">
-                <Resume :isMobile="isMobile" />
+                <ResumeAsync v-if="isVisible1" :isMobile="isMobile" />
 
                 <div class="section-title-up mb-4">
                   <h2>Professional Journey</h2>
@@ -77,7 +77,7 @@
             <div class="overlay"></div>
 
             <!-- Secondary Skills -->
-            <div id="secondary-skills" :class="isMobile ? 'p-4' : 'p-5'" class="d-flex flex-column"
+            <div ref="container1" id="secondary-skills" :class="isMobile ? 'p-4' : 'p-5'" class="d-flex flex-column"
               style="height: 100svh; z-index: 999; width: 100vw; position: relative;">
               <div>
                 <div class="section-title mb-4">
@@ -99,10 +99,8 @@
                         </v-card-text>
                         <v-card-subtitle class="text-body-1">
                           <h4>3D Printing</h4>
-                        </v-card-subtitle>
-                        <v-card-item>
                           <p class="text-subtitle-1">FDM, SLA</p>
-                        </v-card-item>
+                        </v-card-subtitle>
                       </v-card>
                     </v-col>
 
@@ -114,12 +112,10 @@
                         </v-card-text>
                         <v-card-subtitle class="text-body-1">
                           <h4>Raspberry Pi</h4>
-
-                        </v-card-subtitle>
-                        <v-card-item>
                           <p class="text-subtitle-1">Basic flight control program (BLDC motors and servos), Gyro
                             sensor</p>
-                        </v-card-item>
+
+                        </v-card-subtitle>
                       </v-card>
                     </v-col>
                   </v-row>
@@ -207,18 +203,8 @@
                       KOTECHA
                     </span>
                   </h2>
-                  <!-- <h2>KOTECHA</h2> -->
                 </div>
-                <!-- <p>Full-Stack Developer with expertise in modern JavaScript frameworks (Angular) and Python backends
-                  (Django, FastAPI). Experienced in designing and delivering scalable, high-performance web applications
-                  and dynamic CMS platforms. Skilled in building and managing automated build systems and CI/CD
-                  pipelines
-                  for seamless deployments.</p> -->
-
               </div>
-              <!-- <hr style="background: #fff; border: none; height: 2px; display: block;">
-              </hr> -->
-
               <div class="about-content" style="position: relative;">
                 <v-card style="background-color: inherit;" class="elevation-0">
                   <v-card-text>
@@ -381,12 +367,13 @@ import { shallowRef } from 'vue'
 import 'aos/dist/aos.css'
 import AOS from 'aos'
 
-import Resume from './components/Resume.vue'
-// import BlackHole from './components/BlackHole.vue'
 import Navigator from './components/Navigator.vue'
 
 const BlackHoleAsync = defineAsyncComponent(() =>
   import("./components/BlackHole.vue")
+);
+const ResumeAsync = defineAsyncComponent(() =>
+  import("./components/Resume.vue")
 );
 
 const aboutVideo = ref(null);
@@ -406,9 +393,12 @@ let isMobile = false;
 const initialize = ref(false);
 
 const container = ref(null);
+const container1 = ref(null);
 const isVisible = ref(false);
+const isVisible1 = ref(false);
 
 let observer;
+let observer1;
 let scrollBlocked = false;
 
 function preventDefault(e) {
@@ -489,7 +479,7 @@ function initAllSections() {
   if (avatarVideo) {
     avatarVideo.muted = true;
     avatarVideo.setAttribute("muted", "");
-    avatarVideo.play().catch(() => { });
+    // avatarVideo.play().catch(() => { });
   }
 
   if (w < 600) {
@@ -512,7 +502,21 @@ function initAllSections() {
       }
     );
 
+    observer1 = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          isVisible1.value = entry.isIntersecting;
+          // observer.disconnect(); // 🔑 load once only
+        }
+      },
+      {
+        root: null,
+        threshold: 0.05, // 20% visible
+      }
+    );
+
     observer.observe(container.value);
+    observer1.observe(container1.value);
   }, 8000)
 }
 

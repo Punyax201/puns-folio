@@ -1,4 +1,9 @@
 <template>
+  <div class="text-overline font-weight-thin" style="top: 1.5rem; left: 1.5rem; position: absolute;">
+    <span>
+      <p>Inner peace, external chaos</p>
+    </span>
+  </div>
   <div style="position: absolute; width: 100%; inset:0; height: 70%; z-index: 199;">
     <!-- Particles -->
     <vue-particles v-if="canvasOptions" id="bhparticles" :options="canvasOptions"
