@@ -20,6 +20,7 @@
 
 * {
   -webkit-text-fill-color: currentColor;
+  color: #fff;
 }
 
 /* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
@@ -310,8 +311,8 @@ h6 {
   inset: 0;
   background: rgba(0, 45, 81, 0.2);
   z-index: 222;
-  pointer-events: auto;  /* <-- allow overlay to receive pointer events */
-  cursor: default; 
+  pointer-events: auto; /* <-- allow overlay to receive pointer events */
+  cursor: default;
 }
 
 .hero .container {
@@ -379,4 +380,3 @@ h6 {
 .down-btn img {
   transform: rotateZ(180deg);
 }
-
