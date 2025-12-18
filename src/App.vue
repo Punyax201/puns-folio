@@ -150,7 +150,7 @@
                 <div class="px-3 mt-auto mb-3">
                   <div class="row">
                     <div class="col-lg-6 col-sm-12 d-flex justify-start flex-column px-0"
-                      :class="isMobile ? 'gap-3' : 'gap-5'">
+                      :class="isMobile ? 'gap-3' : 'gap-4'">
                       <div class="d-flex flex-column w-100">
                         <span>Generative AI</span>
                         <span class="mt-2"><v-progress-linear color="#00e4ff" v-model="progressValue.genAI"
