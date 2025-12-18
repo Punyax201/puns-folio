@@ -35,8 +35,8 @@
                           <v-card-text>
                             <div class="d-flex w-100 p-2 align-center gap-2">
                               <div>
-                                <h4 :innerHTML="service.title">Web Development</h4>
-                                <p :innerHTML="service.description"></p>
+                                <h6 class="text-h6 font-weight-semibold" :innerHTML="service.title">Web Development</h6>
+                                <p class="text-body-2" :innerHTML="service.description"></p>
                               </div>
                             </div>
                           </v-card-text>
@@ -94,12 +94,12 @@
                     <v-col cols="12" lg="6" sm="12">
                       <v-card style="background-color: inherit;" data-aos="fade-up" data-aos-delay="300">
                         <v-card-text>
-                          <v-img aspect-ratio="16/9" :height="isMobile ? 200 : 300" cover
+                          <v-img aspect-ratio="16/9" :height="isMobile ? 150 : 300" cover
                             src="./assets/img/3d-print-1.jpg"></v-img>
                         </v-card-text>
                         <v-card-subtitle class="text-body-1">
                           <h4>3D Printing</h4>
-                          <p class="text-subtitle-1">FDM, SLA</p>
+                          <p class="text-subtitle-2">FDM, SLA</p>
                         </v-card-subtitle>
                       </v-card>
                     </v-col>
@@ -107,12 +107,13 @@
                     <v-col cols="12" lg="6" sm="12">
                       <v-card style="background-color: inherit;" data-aos="fade-up" data-aos-delay="300">
                         <v-card-text>
-                          <v-img aspect-ratio="16/9" :height="isMobile ? 200 : 300" cover
+                          <v-img aspect-ratio="16/9" :height="isMobile ? 150 : 300" cover
                             src="./assets/img/pi.jpg"></v-img>
                         </v-card-text>
                         <v-card-subtitle class="text-body-1">
                           <h4>Raspberry Pi</h4>
-                          <p class="text-subtitle-1">Basic flight control program (BLDC motors and servos), Gyro
+                          <p class="text-subtitle-2" style="text-wrap: auto;">Basic flight control program (BLDC motors
+                            and servos), Gyro
                             sensor</p>
 
                         </v-card-subtitle>
@@ -145,47 +146,47 @@
                   Video Generation (Comfy UI - WAN 2.2), Image Generation (Stable
                   Diffusion, DALL·E), Text Generation (GPT-4), RAG
                 </p>
-                <v-card style="background-color: inherit;" class="mt-auto mb-auto">
-                  <v-card-text>
-                    <div class="row">
-                      <div class="col-lg-6 col-sm-12 d-flex justify-start flex-column gap-5 px-0">
-                        <div class="d-flex flex-column w-100">
-                          <span>Generative AI</span>
-                          <span class="mt-2"><v-progress-linear color="#00e4ff" v-model="progressValue.genAI"
-                              chunk-count="10"></v-progress-linear></span>
-                        </div>
 
-                        <div class="d-flex flex-column w-100">
-                          <span>FrontEnd Development (Angular, Vue)</span>
-                          <span class="mt-2"><v-progress-linear color="#00e4ff" v-model="progressValue.frontEnd"
-                              chunk-count="10"></v-progress-linear></span>
-                        </div>
-
-                        <div class="d-flex flex-column w-100">
-                          <span>REST APIs and Websockets (Django, FastAPI)</span>
-                          <span class="mt-2"><v-progress-linear color="#00e4ff" v-model="progressValue.backend"
-                              chunk-count="10"></v-progress-linear></span>
-                        </div>
-
-                        <div class="d-flex flex-column w-100">
-                          <span>Azure Cloud (App Services, Build Pipelines, Storage)</span>
-                          <span class="mt-2"><v-progress-linear color="#00e4ff" v-model="progressValue.azure"
-                              chunk-count="10"></v-progress-linear></span>
-                        </div>
-
-                        <div class="d-flex flex-column w-100">
-                          <span>E-commerce CMS (Wordpress)</span>
-                          <span class="mt-2"><v-progress-linear color="#00e4ff" v-model="progressValue.cms"
-                              chunk-count="10"></v-progress-linear></span>
-                        </div>
+                <div class="px-3 mt-auto mb-3">
+                  <div class="row">
+                    <div class="col-lg-6 col-sm-12 d-flex justify-start flex-column px-0"
+                      :class="isMobile ? 'gap-3' : 'gap-5'">
+                      <div class="d-flex flex-column w-100">
+                        <span>Generative AI</span>
+                        <span class="mt-2"><v-progress-linear color="#00e4ff" v-model="progressValue.genAI"
+                            chunk-count="10"></v-progress-linear></span>
                       </div>
 
-                      <!-- <div class="col-lg-8 col-sm-12 mt-4 content">
+                      <div class="d-flex flex-column w-100">
+                        <span>FrontEnd Development (Angular, Vue)</span>
+                        <span class="mt-2"><v-progress-linear color="#00e4ff" v-model="progressValue.frontEnd"
+                            chunk-count="10"></v-progress-linear></span>
+                      </div>
+
+                      <div class="d-flex flex-column w-100">
+                        <span>REST APIs and Websockets (Django, FastAPI)</span>
+                        <span class="mt-2"><v-progress-linear color="#00e4ff" v-model="progressValue.backend"
+                            chunk-count="10"></v-progress-linear></span>
+                      </div>
+
+                      <div class="d-flex flex-column w-100">
+                        <span>Azure Cloud (App Services, Build Pipelines, Storage)</span>
+                        <span class="mt-2"><v-progress-linear color="#00e4ff" v-model="progressValue.azure"
+                            chunk-count="10"></v-progress-linear></span>
+                      </div>
+
+                      <div class="d-flex flex-column w-100">
+                        <span>E-commerce CMS (Wordpress)</span>
+                        <span class="mt-2"><v-progress-linear color="#00e4ff" v-model="progressValue.cms"
+                            chunk-count="10"></v-progress-linear></span>
+                      </div>
+                    </div>
+
+                    <!-- <div class="col-lg-8 col-sm-12 mt-4 content">
 
                       </div> -->
-                    </div>
-                  </v-card-text>
-                </v-card>
+                  </div>
+                </div>
 
               </div>
             </div>
@@ -206,103 +207,109 @@
                 </div>
               </div>
               <div class="about-content" style="position: relative;">
-                <v-card style="background-color: inherit;" class="elevation-0">
-                  <v-card-text>
-                    <div class="row p-0">
-                      <div class="col-lg-8 col-sm-12 content p-0" :class="isMobile ? 'mt-0' : 'mt-4'">
+                <div class="p-3">
+                  <div class="row p-0">
+                    <div class="col-lg-8 col-sm-12 content p-0" :class="isMobile ? 'mt-0' : 'mt-4'">
 
-                        <div class="d-flex flex-column h-100 justify-start">
+                      <div class="d-flex flex-column h-100 justify-start">
 
-                          <div id="details" class="flex p-0 flex-row mt-0">
-                            <ul style="list-style-type: none; list-style: none; flex-wrap: wrap;" class="d-flex p-0"
-                              :class="isMobile ? 'gap-0' : 'gap-4'">
-                              <li>
-                                <span class="d-flex flex-column">
-                                  <div class="font-weight-bold">DOB</div>
-                                  <div class="font-weight-light text-overline">26 <sup>th</sup> Aug, 1998</div>
-                                </span>
-                              </li>
+                        <div id="details" class="flex p-0 flex-row mt-0">
+                          <ul style="list-style-type: none; list-style: none; flex-wrap: wrap;" class="d-flex p-0"
+                            :class="isMobile ? 'gap-0' : 'gap-4'">
+                            <li>
+                              <span class="d-flex flex-column">
+                                <div class="font-weight-bold">DOB</div>
+                                <div class="font-weight-light text-overline">26 <sup>th</sup> Aug, 1998</div>
+                              </span>
+                            </li>
 
-                              <li>
-                                <span class="d-flex flex-column">
-                                  <div class="font-weight-bold">City</div>
-                                  <div class="font-weight-light text-overline">Ahmedabad, Gujarat - भारत (India)</div>
-                                </span>
-                              </li>
+                            <li>
+                              <span class="d-flex flex-column">
+                                <div class="font-weight-bold">City</div>
+                                <div class="font-weight-light text-overline">Ahmedabad, Gujarat - भारत (India)</div>
+                              </span>
+                            </li>
 
-                              <li>
-                                <span class="d-flex flex-column">
-                                  <div class="font-weight-bold">Education</div>
-                                  <div class="font-weight-light text-overline">B.Tech (Information Technology)</div>
-                                </span>
-                              </li>
-                            </ul>
-                          </div>
-
-                          <div id="contact-details" class="flex p-0 flex-row mt-0">
-                            <ul style="list-style-type: none; list-style: none; flex-wrap: wrap;" class="d-flex p-0"
-                              :class="isMobile ? 'gap-3' : 'gap-4'">
-                              <li>
-                                <span class="d-flex flex-column">
-                                  <div class="d-flex justify-center align-center"
-                                    style="width: 48px; height: 48px; border-radius: 50%;">
-                                    <v-btn
-                                      @click="navigateToUrl('https://www.linkedin.com/in/punya-kotecha-0208a3131/')"
-                                      variant="outlined" density="default" icon="bi bi-linkedin"></v-btn>
-                                  </div>
-
-                                </span>
-                              </li>
-                              <li>
-                                <span class="d-flex flex-column">
-                                  <div class="d-flex justify-center align-center"
-                                    style="width: 48px; height: 48px; border-radius: 50%;">
-                                    <v-btn @click="navigateToUrl('mailto:punyax201@gmail.com')" variant="outlined"
-                                      density="default" icon="bi bi-envelope">
-                                      <v-icon>
-                                        bi bi-envelope
-                                      </v-icon>
-                                      <v-tooltip activator="parent" location="end">punyax201@gmail.com</v-tooltip>
-                                    </v-btn>
-                                  </div>
-                                </span>
-                              </li>
-                            </ul>
-                          </div>
-
-                          <div class="mt-auto" :class="isMobile ? 'w-100 mb-1' : 'w-75 mb-5'">
-                            <div class="section-title mb-5">
-                              <h2></h2>
-                              <span
-                                class="text-body-1 font-weight-light position-absolute section-title-dash-text">SOMETHING
-                                <span style="color: #00E4FF;">ABOUT ME</span></span>
-                            </div>
-                            <h2><em>I am a <em>Software Engineer</em> &amp; <em>AI Generalist</em></em></h2>
-                            <p class=" py-3 text-body-1 font-weight-light">
-                              Passionate about leveraging <strong>Generative AI</strong>, with
-                              hands-on experience implementing RAG (Retrieval-Augmented
-                              Generation) workflows and integrating AI-driven features into
-                              real-world solutions. Focused on clean architecture,
-                              performance, and continuous innovation.
-                            </p>
-                          </div>
+                            <li>
+                              <span class="d-flex flex-column">
+                                <div class="font-weight-bold">Education</div>
+                                <div class="font-weight-light text-overline">B.Tech (Information Technology)</div>
+                              </span>
+                            </li>
+                          </ul>
                         </div>
 
+                        <div id="contact-details" class="flex p-0 flex-row mt-0">
+                          <ul style="list-style-type: none; list-style: none; flex-wrap: wrap;" class="d-flex p-0"
+                            :class="isMobile ? 'gap-3' : 'gap-4'">
+                            <li>
+                              <span class="d-flex flex-column">
+                                <div class="d-flex justify-center align-center"
+                                  style="width: 48px; height: 48px; border-radius: 50%;">
+                                  <v-btn @click="navigateToUrl('https://www.linkedin.com/in/punya-kotecha-0208a3131/')"
+                                    variant="outlined" density="default" icon="bi bi-linkedin"></v-btn>
+                                </div>
+
+                              </span>
+                            </li>
+                            <li>
+                              <span class="d-flex flex-column">
+                                <div class="d-flex justify-center align-center"
+                                  style="width: 48px; height: 48px; border-radius: 50%;">
+                                  <v-btn @click="navigateToUrl('mailto:punyax201@gmail.com')" variant="outlined"
+                                    density="default" icon="bi bi-envelope">
+                                    <v-icon>
+                                      bi bi-envelope
+                                    </v-icon>
+                                    <v-tooltip activator="parent" location="end">punyax201@gmail.com</v-tooltip>
+                                  </v-btn>
+                                </div>
+                              </span>
+                            </li>
+                          </ul>
+                        </div>
+
+                        <div class="mt-auto" :class="isMobile ? 'w-100 mb-1' : 'w-75 mb-5'">
+                          <div class="section-title mb-5">
+                            <h2></h2>
+                            <span
+                              class="text-body-1 font-weight-light position-absolute section-title-dash-text">SOMETHING
+                              <span style="color: #00E4FF;">ABOUT ME</span></span>
+                          </div>
+                          <h2><em>I am a <em>Software Engineer</em> &amp; <em>AI Generalist</em></em></h2>
+                          <p class=" py-3 text-body-1 font-weight-light">
+                            Passionate about leveraging <strong>Generative AI</strong>, with
+                            hands-on experience implementing RAG (Retrieval-Augmented
+                            Generation) workflows and integrating AI-driven features into
+                            real-world solutions. Focused on clean architecture,
+                            performance, and continuous innovation.
+                          </p>
+                        </div>
                       </div>
 
-                      <div class="col-lg-4 col-sm-12 d-flex justify-center">
-                        <v-avatar :size="avatarSize">
-                          <!-- <img id="default-image" src="./assets/img/clip.png" width="300"></img> -->
-                          <video :width="avatarSize" autoplay muted loop playsinline preload="auto"
-                            disablePictureInPicture controls="false" tabindex="-1"
-                            src="./assets/clips/lappy.mp4"></video>
-                            <div class="video-overlay" aria-hidden="true"></div>
-                        </v-avatar>
-                      </div>
                     </div>
-                  </v-card-text>
-                </v-card>
 
+                    <div v-if="!isMobile" class="col-lg-4 col-sm-12 d-flex justify-center">
+                      <v-avatar :size="avatarSize">
+                        <!-- <img id="default-image" src="./assets/img/clip.png" width="300"></img> -->
+                        <video :width="avatarSize" autoplay muted loop playsinline preload="auto"
+                          disablePictureInPicture controls="false" tabindex="-1" src="./assets/clips/lappy.mp4"></video>
+                        <div class="video-overlay" aria-hidden="true"></div>
+                      </v-avatar>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Mobile avatar -->
+              <div v-if="isMobile" class="d-flex justify-center" style="position: absolute; right: 1.5rem; top: 1.5rem;">
+                <v-avatar :size="avatarSize">
+                  <!-- <img id="default-image" src="./assets/img/clip.png" width="300"></img> -->
+                  <video :width="avatarSize" autoplay muted loop playsinline preload="auto" disablePictureInPicture
+                    controls="false" tabindex="-1" src="./assets/clips/lappy.mp4"></video>
+                  <div class="video-overlay" aria-hidden="true"></div>
+                </v-avatar>
               </div>
             </div>
           </v-parallax>
@@ -483,7 +490,7 @@ function initAllSections() {
   }
 
   if (w < 600) {
-    avatarSize = 125;
+    avatarSize = 120;
   } else {
     avatarSize = 450;
   }

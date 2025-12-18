@@ -1,7 +1,19 @@
 <template>
-  <div class="text-overline font-weight-thin" style="top: 1.5rem; left: 1.5rem; position: absolute;">
+  <div class="text-overline font-weight-light text-center" style="top: 2rem; left: 0; right: 0; width: 100%;; position: absolute;">
     <span>
       <p>Inner peace, external chaos</p>
+    </span>
+  </div>
+
+  <!-- Key highlights -->
+  <div class="font-weight-thin text-start p-3" style="bottom: 1.5rem; left: 0; width: 100%;; position: absolute; font-size: 0.5rem;">
+    <span class="w-50" >
+      <p class="font-weight-light mb-1">Key Highlights</p>
+      <ul class="p-0" style="list-style-type: none;">
+        <li>WAN 2.2 and Flux 8 (LoRa)</li>
+        <li>Vue 3 Framework</li>
+        <li>WebGL for Graphics rendering</li>
+      </ul>
     </span>
   </div>
   <div style="position: absolute; width: 100%; inset:0; height: 70%; z-index: 199;">
@@ -10,6 +22,14 @@
       style=" z-index: 150; height: 100vh; position: absolute; inset: 0;" />
   </div>
   <canvas id="glcanvas" style="position: relative; z-index: 222; overflow: hidden; width: auto;"></canvas>
+
+  <!-- Copyright -->
+  <div class="font-weight-thin text-center" style="bottom: 1.5rem; left: 0; right: 0; width: 100%;; position: absolute; font-size: 0.5rem;">
+    <span>
+      <!-- Write footer copyright text -->
+       <p>Copyright © Punya Kotecha (2026) </p>
+    </span>
+  </div>
 </template>
 
 <style scoped>
